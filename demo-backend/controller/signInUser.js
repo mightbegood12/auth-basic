@@ -22,12 +22,12 @@ const checkUserCredentials = (emailId, password) => {
 const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const isMatch = await checkUserCredentials(email, password);
+    const isMatch = checkUserCredentials(email, password);
     if (isMatch) {
       const token = createToken(email);
       res.status(201).json({ success: true, token });
     } else {
-      res.status(400).json({ success: false, message: "Unauthorized!" });
+      res.status(201).json({ success: false, message: "Unauthorized!" });
     }
   } catch (error) {
     console.log(error);

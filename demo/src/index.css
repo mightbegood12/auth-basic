@@ -12,6 +12,9 @@ body {
   padding: 1rem;
   color: white;
   font-size: 2rem;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
 }
 
 input {
@@ -40,6 +43,7 @@ input:focus {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .form {
@@ -59,4 +63,11 @@ input[type="submit"] {
   padding-block: 12px;
   align-self: center;
   cursor: pointer;
+}
+
+.warning {
+  color: red;
+  font-size: small;
+  text-align: center;
+  margin-top: 12px;
 }
