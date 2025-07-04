@@ -6,7 +6,9 @@ let authorized_user = {
 };
 
 const createToken = (emailId) => {
-  return jwt.sign({ emailId }, "sample_key_2040402", { expiresIn: "3600s" });
+  return jwt.sign({ emailId }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "3600s",
+  });
 };
 
 const checkUserCredentials = (emailId, password) => {
@@ -19,6 +21,20 @@ const checkUserCredentials = (emailId, password) => {
   return false;
 };
 
+//Registering new user
+const registerUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+  } catch (error) {}
+};
+
+const getUserDetails = async (req, res) => {
+  try {
+    res.status(201).json({});
+  } catch (e) {}
+};
+
+//Signing In
 const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -34,4 +50,4 @@ const signInUser = async (req, res) => {
   }
 };
 
-export { signInUser };
+export { signInUser, registerUser, getUserDetails };
