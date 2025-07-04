@@ -2,9 +2,18 @@ import express from "express";
 import cors from "cors";
 import userRouter from "./routers/userRouter.js";
 import dotenv from "dotenv";
+import client from "./config/postgresConfig.js";
 
 const app = express();
 dotenv.config();
+client
+  .connect()
+  .then(() => {
+    console.log("Connected to local Postgres DB");
+  })
+  .catch((err) => {
+    console.log("Error connecting the PostgresDB", err);
+  });
 // app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
