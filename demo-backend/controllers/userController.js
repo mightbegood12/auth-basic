@@ -1,9 +1,6 @@
 import jwt from "jsonwebtoken";
-
-let authorized_user = {
-  email: "sample@gmail.com",
-  password: "dddd",
-};
+import pool from "../config/postgresConfig.js";
+import bcrypt from "bcrypt";
 
 const createToken = (emailId) => {
   return jwt.sign({ emailId }, process.env.JWT_SECRET_KEY, {
@@ -11,21 +8,40 @@ const createToken = (emailId) => {
   });
 };
 
-const checkUserCredentials = (emailId, password) => {
-  if (
-    emailId == authorized_user.email &&
-    password == authorized_user.password
-  ) {
-    return true;
+const checkUserCredentials = async (emailId, password) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM user_data WHERE email_id = $1",
+      [emailId]
+    );
+    // console.log(result.rows[0]);
+    if (result.rowCount > 0) {
+      const isPasswordMatch = await bcrypt.compare(
+        password,
+        result.rows[0].password
+      );
+      console.log(isPasswordMatch);
+      return isPasswordMatch;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
   }
-  return false;
 };
 
 //Registering new user
 const registerUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-  } catch (error) {}
+    res.status(200).json({ success: true, message: "User details" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(401).json({
+      success: false,
+      message: "Something went wrong! in register user",
+    });
+  }
 };
 
 const getUserDetails = async (req, res) => {
@@ -38,7 +54,7 @@ const getUserDetails = async (req, res) => {
 const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const isMatch = checkUserCredentials(email, password);
+    const isMatch = await checkUserCredentials(email, password);
     if (isMatch) {
       const token = createToken(email);
       res.status(201).json({ success: true, token });

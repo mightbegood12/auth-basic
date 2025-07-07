@@ -7,10 +7,11 @@ import { useAppContext } from "./context/AppContext";
 
 function App() {
   const navigate = useNavigate();
-  const { isAuthorized } = useAppContext();
+  const { isAuthorized, setIsAuthorized } = useAppContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
+    setIsAuthorized(false);
   };
   return (
     <>
@@ -21,10 +22,10 @@ function App() {
       )}
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         <Route
-          path="/home"
+          path="/"
           element={
             <ProtectedRoute>
               <Home />
