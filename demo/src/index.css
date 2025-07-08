@@ -2,18 +2,50 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  background-image: url("../public/background-home.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+* {
+  transition: all ease-in-out;
+  transition-duration: 200ms;
+}
+
+*::selection {
+  background-color: #ffc90f;
 }
 
 .navbar {
-  width: 100%;
   position: absolute;
-  height: 10%;
-  background-image: linear-gradient(180deg, rgb(65, 0, 170), rgb(0, 146, 204));
-  color: white;
+  height: 3rem;
+  top: 20px;
+  width: 20rem;
+  background: rgba(255, 201, 15, 0.58);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.1px);
+  -webkit-backdrop-filter: blur(5.1px);
+  border: 1px solid rgba(255, 201, 15, 0.3);
+  color: black;
   font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  left: 50%;
+  transform: translate(-50%);
+}
+.navbar:hover {
+  width: 22rem;
 }
 
 input {
@@ -22,19 +54,17 @@ input {
   border: 1px solid black;
 }
 
-input:focus {
-  border: none;
-}
-
 .home-container {
-  width: 100vw;
-  height: 100vh;
+  width: 80vw;
+  height: 80vh;
+  margin-top: 10vh;
+  border-radius: 2rem 0rem 2rem 0rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: 2rem;
-  gap: 20px;
+  background-color: rgba(255, 255, 255, 0.514);
 }
 
 .login-container {
@@ -51,6 +81,7 @@ input:focus {
   flex-direction: column;
   width: 20rem;
   border: 1px solid black;
+  background-color: white;
   padding: 2rem;
   border-radius: 12px;
   gap: 1rem;
@@ -63,16 +94,150 @@ input[type="submit"] {
   padding-block: 12px;
   align-self: center;
   cursor: pointer;
+  border: none;
+}
+
+.heading {
+  padding: 12px;
+  font-size: 2rem;
+  position: sticky;
+  top: 0px;
+  backdrop-filter: blur(20px);
+}
+
+.heading::after {
+  content: " ";
+  background-color: #ffc90f;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  width: 50px;
+  height: 2px;
+  opacity: 0.85;
+  transform: translateX(20px);
+  transition: 0.3s ease-out;
+}
+
+.note-view {
+  background-color: #f3f2f1;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-left: 2px solid rgba(201, 201, 201, 0.493);
+}
+
+.recent-notes {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.notes-link {
+  background: #f3f2f1;
+  width: 100%;
+  height: 4rem;
+  font-size: 1rem;
+  align-items: start;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid rgba(124, 124, 124, 0.568);
+}
+
+.notes-link:hover {
+  background: #ffcb0f8e;
+}
+.text-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding-inline: 12px;
+}
+.text-one-line {
+  width: 90%;
+  height: 18px;
+  font-size: small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-inline: 12px;
+  text-align: start;
+}
+
+.notes-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: start;
+  padding-inline: 60px;
+}
+
+.notes-text {
+  font-size: 1.2rem;
+  align-self: center;
+  text-align: justify;
+  width: 80%;
+  padding: 20px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .warning {
   color: red;
-  font-size: small;
+  font-size: medium;
   text-align: center;
   margin-top: 12px;
+}
+
+.notes-container {
+  height: 70%;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding-top: 2rem;
+
+  margin: 2rem;
+}
+
+.change-login {
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: gray;
+}
+
+.change-login:hover {
+  color: black;
 }
 
 button {
   padding-block: 4px;
   cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+}
+
+.loading-screen {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  font-size: larger;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: black;
+  outline: none;
+  border-radius: 20px;
+  padding: 8px;
+}
+
+.logout-btn:hover {
+  background: black;
+  color: white;
 }

@@ -4,8 +4,11 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [isAuthorized, setIsAuthorized] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   return (
-    <AppContext.Provider value={{ isAuthorized, setIsAuthorized }}>
+    <AppContext.Provider
+      value={{ isAuthorized, setIsAuthorized, isLoading, setIsLoading }}
+    >
       {children}
     </AppContext.Provider>
   );

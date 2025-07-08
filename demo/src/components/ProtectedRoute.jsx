@@ -32,7 +32,7 @@ const ProtectedRoute = ({ children }) => {
   }, [setIsAuthorized]);
 
   if (isAuthorized === null) {
-    return <div>Loading...</div>;
+    return <div className="loading-screen">Loading...</div>;
   }
 
   if (!isAuthorized) {

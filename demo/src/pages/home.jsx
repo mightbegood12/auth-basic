@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import NotesSideBar from "../components/NotesSideBar";
+import { NotesContainer } from "../components/NotesContainer";
 
 const Home = () => {
   const [fetchedData, setFetchedData] = useState("");
@@ -27,9 +29,8 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        <div>You are in Home Page</div>
-        <button onClick={fetchData}>Click here to see data</button>
-        {fetchedData && <div>{fetchedData}</div>}
+        <NotesSideBar />
+        <NotesContainer />
       </div>
     </>
   );
