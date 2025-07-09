@@ -1,7 +1,8 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAppContext } from "../context/AppContext";
+import { toast } from "sonner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,11 +28,13 @@ const Login = () => {
           const token = response.data.token;
           localStorage.setItem("token", token);
           setIsAuthorized(true);
-          navigate("/");
+          navigate("/notes/:id");
+          toast.success("Login Successful!");
           setIsLoading(false);
         } else {
           setAuthenticationError(true);
           localStorage.removeItem("token");
+          toast.error("Login Unsuccessful!");
           setIsLoading(false);
         }
       } else if (isSigned === "Sign Up" && name !== "") {
@@ -48,15 +51,18 @@ const Login = () => {
           const token = response.data.token;
           localStorage.setItem("token", token);
           setIsAuthorized(true);
-          navigate("/");
+          navigate("/notes/:id");
           setIsLoading(false);
+          toast.success("User registered!");
         } else {
           setAuthenticationError(true);
           setIsLoading(false);
           localStorage.removeItem("token");
+          toast.error("Login Unsuccessful!");
         }
       } else {
         setAuthenticationError(true);
+        toast.error("Check your credentials");
       }
     } catch (error) {
       console.log(error);
@@ -77,6 +83,7 @@ const Login = () => {
             <label>Name</label>
             <input
               type="text"
+              className="login-input"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -88,6 +95,7 @@ const Login = () => {
         <label>Email</label>
         <input
           type="email"
+          className="login-input"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -97,6 +105,7 @@ const Login = () => {
         <label>Password</label>
         <input
           type="password"
+          className="login-input"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);

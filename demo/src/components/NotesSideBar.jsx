@@ -1,21 +1,30 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { NotesLink } from "./NotesLink";
+import { toast } from "sonner";
+
+const handleCreatingNote = async () => {
+  try {
+    toast.info("Creating a note for you!");
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 
 const NotesSideBar = () => {
   return (
     <div className="recent-notes">
       <div className="heading">Recent Notes</div>
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
-      <NotesLink />
+      {/* <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" />
+      <NotesLink title="Title" content="Empty" /> */}
+      <div className="note-btn-container">
+        <div onClick={handleCreatingNote} className="create-Btn">
+          Create New Note
+        </div>
+      </div>
     </div>
   );
 };

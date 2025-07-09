@@ -1,22 +1,30 @@
-import React from "react";
+import { useState } from "react";
 
 export const NotesContainer = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   return (
     <div className="note-view">
       <div className="heading">Note View</div>
       <div className="notes-container">
-        <div className="notes-title">Title</div>
-        <div className="notes-text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-        </div>
+        <input
+          type="text"
+          className="notes-title"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <textarea
+          name="content"
+          className="notes-text"
+          placeholder="Empty"
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        />
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import pool from "../config/postgresConfig.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-const createToken = (emailId) => {
-  if (emailId) {
-    return jwt.sign({ emailId }, process.env.JWT_SECRET_KEY, {
+const createToken = (user_id) => {
+  if (user_id) {
+    return jwt.sign({ user_id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "3600s",
     });
   }
@@ -24,7 +24,6 @@ const checkUserCredentials = async (emailId, password) => {
         password,
         result.rows[0].password
       );
-      // console.log(isPasswordMatch);
       return isPasswordMatch;
     } else {
       return false;
@@ -70,7 +69,7 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Error in updating DB" });
     }
-    const token = createToken(email);
+    const token = createToken(queryResult.rows[0].user_id);
     if (!token) {
       return res
         .status(400)
@@ -100,9 +99,10 @@ const getUserDetails = async (req, res) => {
 const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const isMatch = await checkUserCredentials(email, password);
-    if (isMatch) {
-      const token = createToken(email);
+    const isPasswordMatch = await checkUserCredentials(email, password);
+    console.log(isPasswordMatch);
+    if (isPasswordMatch) {
+      const token = createToken(user_id);
       res.status(201).json({ success: true, token });
     } else {
       res.status(400).json({ success: false, message: "Unauthorized!" });

@@ -3,6 +3,7 @@ import cors from "cors";
 import userRouter from "./routers/userRouter.js";
 import dotenv from "dotenv";
 import pool from "./config/postgresConfig.js";
+import noteRouter from "./routers/noteRouter.js";
 
 const app = express();
 dotenv.config();
@@ -19,7 +20,9 @@ pool
 app.use(express.json());
 app.use(cors());
 
+//routes
 app.use("/api/user", userRouter);
+app.use("/api/notes", noteRouter);
 
 app.get("/", (req, res) => {
   res.send("Working");
