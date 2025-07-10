@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
         );
         if (response.data.success) {
           setIsAuthorized(true);
-          // console.log("Authenticated:", response.data);
+          console.log("Authenticated:", response.data);
         } else {
           setIsAuthorized(false);
         }

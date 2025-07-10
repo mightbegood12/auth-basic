@@ -22,7 +22,7 @@ function App() {
         <div className="navbar">
           <div className="round-nav"></div>
           <NavLink to="/notes/:id" className="title-nav">
-            EZ Notes
+            E-Notes
           </NavLink>
           <div className="button-group">
             <NavLink className="logout-btn" to="/profile">
@@ -32,9 +32,11 @@ function App() {
                 width="16px"
                 height="16px"
               />
+              <div className="tooltip profile-tt">Profile</div>
             </NavLink>
             <button className="logout-btn" onClick={handleLogout}>
-              <img src="/logout.png" alt="Profile" width="18px" height="18px" />
+              <img src="/logout.png" alt="Profile" width="16px" height="16px" />
+              <div className="tooltip logout-tt">Logout</div>
             </button>
           </div>
         </div>

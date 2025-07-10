@@ -278,6 +278,29 @@ input:focus {
 
 .logout-btn:hover {
   color: black;
+  .logout-tt {
+    opacity: 1;
+    display: block;
+  }
+  .profile-tt {
+    opacity: 1;
+    display: block;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: 2rem;
+  background: #00000089;
+  border-radius: 30px;
+  padding-inline: 12px;
+  padding-block: 8px;
+  color: white;
+  font-size: small;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  opacity: 0;
+  display: none;
 }
 
 .round-nav {

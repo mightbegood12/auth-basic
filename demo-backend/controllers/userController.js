@@ -3,9 +3,9 @@ import pool from "../config/postgresConfig.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-const createToken = (user_id) => {
+const createToken = (user_id, email) => {
   if (user_id) {
-    return jwt.sign({ user_id }, process.env.JWT_SECRET_KEY, {
+    return jwt.sign({ user_id, email }, process.env.JWT_SECRET_KEY, {
       expiresIn: "3600s",
     });
   }
@@ -64,12 +64,13 @@ const registerUser = async (req, res) => {
       "INSERT INTO user_data (user_name, email_id, password) VALUES ($1, $2, $3)",
       [name, email, hashedPassword]
     );
-    if (queryResult.rowCount == 0) {
+    if (queryResult.rowCount === 0) {
       return res
         .status(400)
         .json({ success: false, message: "Error in updating DB" });
     }
-    const token = createToken(queryResult.rows[0].user_id);
+    console.log("queryResult: ", queryResult);
+    const token = createToken(queryResult.rows[0].user_id, email);
     if (!token) {
       return res
         .status(400)
@@ -99,10 +100,13 @@ const getUserDetails = async (req, res) => {
 const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const user = await pool.query(
+      "SELECT * FROM user_data WHERE email_id = $1",
+      [email]
+    );
     const isPasswordMatch = await checkUserCredentials(email, password);
-    console.log(isPasswordMatch);
     if (isPasswordMatch) {
-      const token = createToken(user_id);
+      const token = createToken(email, user.rows[0].user_id);
       res.status(201).json({ success: true, token });
     } else {
       res.status(400).json({ success: false, message: "Unauthorized!" });
