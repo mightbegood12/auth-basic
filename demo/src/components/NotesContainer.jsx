@@ -1,8 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
 
-export const NotesContainer = () => {
+export const NotesContainer = (noteId) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  // const fetchNoteById = async() =>{
+  //   try{
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.get()
+  //   }
+  // }
   return (
     <div className="note-view">
       <div className="heading">Note View</div>

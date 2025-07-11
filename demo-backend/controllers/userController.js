@@ -43,7 +43,7 @@ const registerUser = async (req, res) => {
     );
     if (isExist.rowCount > 0) {
       return res
-        .status(401)
+        .status(409)
         .json({ success: false, message: "User already exists!" });
     }
     if (!validator.isEmail(email)) {
@@ -61,7 +61,7 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     // Saving new user to pg database using query
     const queryResult = await pool.query(
-      "INSERT INTO user_data (user_name, email_id, password) VALUES ($1, $2, $3)",
+      "INSERT INTO user_data (user_name, email_id, password) VALUES ($1, $2, $3) RETURNING user_id",
       [name, email, hashedPassword]
     );
     if (queryResult.rowCount === 0) {
@@ -69,7 +69,6 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Error in updating DB" });
     }
-    console.log("queryResult: ", queryResult);
     const token = createToken(queryResult.rows[0].user_id, email);
     if (!token) {
       return res
@@ -83,7 +82,7 @@ const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(401).json({
+    res.status(500).json({
       success: false,
       message: "Something went wrong! in registering user",
     });
@@ -106,7 +105,7 @@ const signInUser = async (req, res) => {
     );
     const isPasswordMatch = await checkUserCredentials(email, password);
     if (isPasswordMatch) {
-      const token = createToken(email, user.rows[0].user_id);
+      const token = createToken(user.rows[0].user_id, email);
       res.status(201).json({ success: true, token });
     } else {
       res.status(400).json({ success: false, message: "Unauthorized!" });

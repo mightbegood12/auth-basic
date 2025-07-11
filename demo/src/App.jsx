@@ -22,7 +22,7 @@ function App() {
         <div className="navbar">
           <div className="round-nav"></div>
           <NavLink to="/notes/:id" className="title-nav">
-            E-Notes
+            eNotes
           </NavLink>
           <div className="button-group">
             <NavLink className="logout-btn" to="/profile">
