@@ -10,7 +10,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isSigned, setIsSigned] = useState("Sign Up");
   const [authenticationError, setAuthenticationError] = useState(false);
-  const { setIsAuthorized, isLoading, setIsLoading } = useAppContext();
+  const { setIsAuthorized, isLoading, setIsLoading, allNotes } =
+    useAppContext();
   const navigate = useNavigate();
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ const Login = () => {
           const token = response.data.token;
           localStorage.setItem("token", token);
           setIsAuthorized(true);
-          navigate("/notes/:id");
+          navigate(`/notes/${allNotes[0].note_id}`);
           toast.success("Login Successful!");
           setIsLoading(false);
         } else {

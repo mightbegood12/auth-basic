@@ -13,10 +13,9 @@ export const AppProvider = ({ children }) => {
   const createNewNote = async (note_title, note_content) => {
     const noteId = uuidv4();
     const token = localStorage.getItem("token");
-
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/notes/createNote",
+      const response = await axios.put(
+        "http://localhost:5000/api/notes/createAndUpdateNote",
         {
           note_id: noteId,
           note_content,
@@ -30,12 +29,11 @@ export const AppProvider = ({ children }) => {
         }
       );
 
-      console.log("Note created successfully:", response.data);
       fetchAllNotes();
-      return response.data; // Return the response data
+      return response.data;
     } catch (err) {
       console.error("Error creating note:", err.response?.data || err.message);
-      throw err; // Re-throw so calling code can handle it
+      // throw err;
     }
   };
   const fetchAllNotes = async () => {
@@ -54,6 +52,53 @@ export const AppProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const deleteNote = async (note_id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.delete(
+        "http://localhost:5000/api/notes/deleteNote",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            id: note_id,
+          },
+        }
+      );
+      fetchAllNotes();
+      return response.data;
+    } catch (err) {
+      console.error("Error Deleting note:", err.response?.data || err.message);
+      // throw err; // Re-throw so calling code can handle it
+    }
+  };
+  const updateNote = async (note_id, note_title, note_content) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/notes/createAndUpdateNote",
+        {
+          note_id: note_id,
+          note_content,
+          note_title,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      fetchAllNotes();
+      return response.data;
+    } catch (err) {
+      console.error("Error creating note:", err.response?.data || err.message);
+      // throw err;
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -65,6 +110,8 @@ export const AppProvider = ({ children }) => {
         setIsLoading,
         createNewNote,
         fetchAllNotes,
+        deleteNote,
+        updateNote,
       }}
     >
       {children}

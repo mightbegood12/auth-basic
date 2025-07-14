@@ -8,7 +8,7 @@ import { toast, Toaster } from "sonner";
 
 function App() {
   const navigate = useNavigate();
-  const { isAuthorized, setIsAuthorized } = useAppContext();
+  const { isAuthorized, setIsAuthorized, allNotes } = useAppContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("User Logged out!");
@@ -17,11 +17,11 @@ function App() {
   };
   return (
     <>
-      <Toaster position="top-center" richColors />
+      <Toaster position="top-center" richColors duration={1000} />
       {isAuthorized && (
         <div className="navbar">
           <div className="round-nav"></div>
-          <NavLink to="/notes/:id" className="title-nav">
+          <NavLink to={`/notes/jdkdd-ddkdkd-dddkdkk`} className="title-nav">
             eNotes
           </NavLink>
           <div className="button-group">
