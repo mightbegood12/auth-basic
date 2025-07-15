@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:5000/api/user/auth",
+          process.env.REACT_APP_BACKEND_URL + "/api/user/auth",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
