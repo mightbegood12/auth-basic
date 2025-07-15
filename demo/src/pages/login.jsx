@@ -19,7 +19,7 @@ const Login = () => {
       if (isSigned === "Login" && email !== "") {
         setIsLoading(true);
         const response = await axios.post(
-          "http://localhost:5000/api/user/signin",
+          process.env.REACT_APP_BACKEND_URL + "/api/user/signin",
           {
             email: email,
             password: password,
@@ -29,7 +29,7 @@ const Login = () => {
           const token = response.data.token;
           localStorage.setItem("token", token);
           setIsAuthorized(true);
-          navigate(`/notes/${allNotes[0].note_id}`);
+          navigate(`/notes/${allNotes ? allNotes[0]?.note_id : "noteId"}`);
           toast.success("Login Successful!");
           setIsLoading(false);
         } else {
@@ -41,7 +41,7 @@ const Login = () => {
       } else if (isSigned === "Sign Up" && name !== "") {
         setIsLoading(true);
         const response = await axios.post(
-          "http://localhost:5000/api/user/register",
+          process.env.REACT_APP_BACKEND_URL + "/api/user/register",
           {
             name: name,
             email: email,

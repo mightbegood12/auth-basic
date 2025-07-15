@@ -10,7 +10,7 @@ export const NotesLink = ({ title, content, id }) => {
     try {
       toast.info("Deleting note!");
       deleteNote(id);
-      navigate(`/notes/${allNotes[0].note_id}`);
+      navigate(`/notes/${allNotes[0]?.note_id}`);
     } catch (e) {
       console.log(e.message);
     }

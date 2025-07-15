@@ -15,7 +15,7 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/notes/createAndUpdateNote",
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/createAndUpdateNote",
         {
           note_id: noteId,
           note_content,
@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/notes/fetchNotes",
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/fetchNotes",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -56,7 +56,7 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.delete(
-        "http://localhost:5000/api/notes/deleteNote",
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/deleteNote",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ export const AppProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/notes/createAndUpdateNote",
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/createAndUpdateNote",
         {
           note_id: note_id,
           note_content,

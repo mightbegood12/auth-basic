@@ -183,7 +183,7 @@ input[type="submit"] {
   border-bottom: 1px solid rgba(124, 124, 124, 0.568);
 }
 
-a.active {
+.notes-link.active {
   background: #ffd335;
 }
 
@@ -390,5 +390,3 @@ input:focus {
   align-items: end;
   justify-content: end;
 }
-
-/* MX4mwsZuymmgsytA supabase password */

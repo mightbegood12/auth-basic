@@ -12,15 +12,15 @@ export const NotesContainer = () => {
   const params = useParams();
   const { updateNote } = useAppContext();
 
-  const fetchNoteById = async () => {
+  const fetchNoteById = async (noteId) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/notes/fetchNoteById",
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/fetchNoteById",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: {
-            id: params.noteId,
+            id: noteId,
           },
         }
       );
@@ -34,7 +34,7 @@ export const NotesContainer = () => {
         });
         setDate(curr_date);
       } else {
-        console.log("Something went wrong.");
+        toast.error("Failed to load note.");
       }
     } catch (e) {
       console.log(e);
@@ -42,7 +42,7 @@ export const NotesContainer = () => {
   };
   const handleUpdate = async () => {
     try {
-      updateNote(params.noteId, title, content);
+      await updateNote(params.noteId, title, content);
       toast.info("Note updated!");
       fetchNoteById();
     } catch (e) {
@@ -51,7 +51,7 @@ export const NotesContainer = () => {
   };
 
   useEffect(() => {
-    fetchNoteById();
+    fetchNoteById(params.noteId);
   }, [params.noteId]);
 
   return (
