@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useEffect } from "react";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import axios from "axios";
 
 const ProtectedRoute = ({ children }) => {
@@ -32,7 +33,11 @@ const ProtectedRoute = ({ children }) => {
   }, [setIsAuthorized]);
 
   if (isAuthorized === null) {
-    return <div className="loading-screen">Loading...</div>;
+    return (
+      <div className="loading-screen">
+        <PacmanLoader color="#ffb118" />
+      </div>
+    );
   }
 
   if (!isAuthorized) {

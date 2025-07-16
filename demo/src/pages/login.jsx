@@ -66,6 +66,8 @@ const Login = () => {
         toast.error("Check your credentials");
       }
     } catch (error) {
+      setAuthenticationError(true);
+      setIsLoading(false);
       console.log(error);
     }
   };

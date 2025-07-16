@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
@@ -8,50 +7,36 @@ export const NotesContainer = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
-  // const [time, setTime] = useState("");
   const params = useParams();
-  const { updateNote } = useAppContext();
+  const { updateNote, fetchNoteById } = useAppContext();
 
-  const fetchNoteById = async (noteId) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        process.env.REACT_APP_BACKEND_URL + "/api/notes/fetchNoteById",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          params: {
-            id: noteId,
-          },
-        }
-      );
-      if (response.data.success) {
-        const note = response.data.note;
-        setTitle(note.note_title);
-        setContent(note.note_content);
-        const originalDate = new Date(note.updated_at);
-        const curr_date = originalDate.toLocaleString("en-IN", {
-          timeZone: "Asia/Kolkata",
-        });
-        setDate(curr_date);
-      } else {
-        toast.error("Failed to load note.");
-      }
-    } catch (e) {
-      console.log(e);
+  const handlefetchNoteById = async (noteId) => {
+    const data = await fetchNoteById(noteId);
+    if (data) {
+      const note = data.note;
+      setTitle(note.note_title);
+      setContent(note.note_content);
+      const originalDate = new Date(note.updated_at);
+      const curr_date = originalDate.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+      });
+      setDate(curr_date);
+    } else {
+      toast.error("Failed to load note.");
     }
   };
   const handleUpdate = async () => {
     try {
       await updateNote(params.noteId, title, content);
       toast.info("Note updated!");
-      fetchNoteById();
+      await handlefetchNoteById(params.noteId);
     } catch (e) {
       console.log("Something went wrong: ", e);
     }
   };
 
   useEffect(() => {
-    fetchNoteById(params.noteId);
+    if (params.noteId) handlefetchNoteById(params.noteId);
   }, [params.noteId]);
 
   return (

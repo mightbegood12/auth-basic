@@ -99,6 +99,23 @@ export const AppProvider = ({ children }) => {
       // throw err;
     }
   };
+  const fetchNoteById = async (note_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/api/notes/fetchNoteById",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          params: {
+            id: note_id,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -112,6 +129,7 @@ export const AppProvider = ({ children }) => {
         fetchAllNotes,
         deleteNote,
         updateNote,
+        fetchNoteById,
       }}
     >
       {children}

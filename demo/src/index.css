@@ -72,7 +72,7 @@ a {
     transition: all;
     transition-delay: 200ms;
   }
-  .logout-btn {
+  .nav-btn {
     opacity: 1;
   }
   .round-nav {
@@ -277,7 +277,7 @@ input:focus {
   font-size: larger;
 }
 
-.logout-btn {
+.nav-btn {
   background: transparent;
   border: none;
   color: white;
@@ -286,7 +286,7 @@ input:focus {
   position: relative;
 }
 
-.logout-btn:hover {
+.nav-btn:hover {
   color: black;
   .logout-tt {
     opacity: 1;
@@ -389,4 +389,11 @@ input:focus {
   display: flex;
   align-items: end;
   justify-content: end;
+}
+
+.profile-title {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  justify-content: center;
 }

@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const Home = () => {
-  const { fetchAllNotes } = useAppContext();
-
+  const { isAuthorized, fetchAllNotes } = useAppContext();
   useEffect(() => {
-    fetchAllNotes();
+    if (isAuthorized) fetchAllNotes();
   }, []);
 
   return (
