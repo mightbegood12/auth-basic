@@ -84,6 +84,12 @@ const deleteNoteById = async (req, res) => {
 const fetchNoteById = async (req, res) => {
   const user_id = req.user.user_id;
   const note_id = req.query.id;
+  if (note_id.length < 10) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid Note Id",
+    });
+  }
   const queryResult = await pool.query(
     "SELECT note_title, note_content, created_at, updated_at FROM notes_data WHERE user_id = $1 AND note_id = $2",
     [user_id, note_id]

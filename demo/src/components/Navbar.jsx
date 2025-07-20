@@ -1,10 +1,16 @@
 import { toast } from "sonner";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { setIsAuthorized, allNotes } = useAppContext();
+  const { setIsAuthorized } = useAppContext();
+  const { data } = useQuery({
+    queryKey: ["allNotes"],
+    queryFn: () => [],
+    enabled: false,
+  });
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("User Logged out!");
@@ -15,10 +21,11 @@ const Navbar = () => {
     <div className="navbar">
       <div className="round-nav"></div>
       <NavLink
-        to={`/notes/${allNotes[0] ? allNotes[0].note_id : "noteId"}`}
+        to={`/notes/${data?.notes[0] ? data?.notes[0].note_id : "noteId"}`}
         className="title-nav"
       >
-        eNotes
+        <img src="/notes_icon.png" alt="Profile" width="16px" height="16px" />
+        {"    "}eNotes
       </NavLink>
       <div className="button-group">
         <NavLink className="nav-btn" to="/profile">

@@ -1,16 +1,22 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/AppContext";
 import { toast } from "sonner";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteNote } from "../queries/api.js";
 
 export const NotesLink = ({ title, content, id }) => {
-  const { deleteNote, allNotes } = useAppContext();
   const navigate = useNavigate();
-
+  const { data } = useQuery({
+    queryKey: ["allNotes"],
+    queryFn: () => [],
+    enabled: false,
+  });
+  const queryClient = useQueryClient();
   const handleDeleteNote = async () => {
     try {
       toast.info("Deleting note!");
-      deleteNote(id);
-      navigate(`/notes/${allNotes[0]?.note_id}`);
+      await deleteNote(id);
+      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+      navigate(`/notes/${data.notes[1]?.note_id}`);
     } catch (e) {
       console.log(e.message);
     }
