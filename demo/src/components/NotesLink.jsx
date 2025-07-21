@@ -1,24 +1,31 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteNote } from "../queries/api.js";
+import { useQueryClient } from "@tanstack/react-query";
+import { deleteNote, fetchAllNotes } from "../queries/api.js";
 
 export const NotesLink = ({ title, content, id }) => {
-  const navigate = useNavigate();
-  const { data } = useQuery({
-    queryKey: ["allNotes"],
-    queryFn: () => [],
-    enabled: false,
-  });
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const handleDeleteNote = async () => {
     try {
-      toast.info("Deleting note!");
+      toast.info("Deleting note...");
       await deleteNote(id);
-      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
-      navigate(`/notes/${data.notes[1]?.note_id}`);
-    } catch (e) {
-      console.log(e.message);
+      await queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+      const updatedData = await queryClient.ensureQueryData({
+        queryKey: ["allNotes"],
+        queryFn: fetchAllNotes,
+      });
+      toast.success("Note deleted!");
+      const remainingNotes = updatedData.notes ?? [];
+      if (remainingNotes.length > 0) {
+        navigate(`/notes/${remainingNotes[0].note_id}`);
+      } else {
+        navigate("/notes/noteId");
+      }
+    } catch (error) {
+      toast.error("Failed to delete note.");
+      console.error(error.message);
     }
   };
 

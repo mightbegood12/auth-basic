@@ -50,4 +50,35 @@ const fetchNoteById = async (note_id) => {
   return response.data;
 };
 
-export { fetchAllNotes, fetchNoteById, updateNote, deleteNote, createNewNote };
+const getUserDetails = async () => {
+  const response = await axiosInstance.get("/api/user/getDetails");
+  return response.data;
+};
+
+const loginUser = async ({ email, password }) => {
+  const response = await axiosInstance.post("/api/user/signin", {
+    email,
+    password,
+  });
+  return response.data;
+};
+
+const registerUser = async ({ name, email, password }) => {
+  const response = await axiosInstance.post("/api/user/register", {
+    name,
+    email,
+    password,
+  });
+  return response.data;
+};
+
+export {
+  fetchAllNotes,
+  fetchNoteById,
+  updateNote,
+  deleteNote,
+  createNewNote,
+  getUserDetails,
+  loginUser,
+  registerUser,
+};

@@ -91,8 +91,17 @@ const registerUser = async (req, res) => {
 
 const getUserDetails = async (req, res) => {
   try {
-    res.status(201).json({});
-  } catch (e) {}
+    const userDetails = req.user;
+    const user = await pool.query(
+      "SELECT user_name FROM user_data WHERE user_id = $1",
+      [userDetails.user_id]
+    );
+    res
+      .status(201)
+      .json({ success: true, userDetails, user_name: user.rows[0].user_name });
+  } catch (e) {
+    res.status(401).json({ success: false, error: e });
+  }
 };
 
 //Signing In

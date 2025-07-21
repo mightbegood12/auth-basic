@@ -1,6 +1,14 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getUserDetails } from "../queries/api";
 
 const Profile = () => {
+  const { data, isPending, error } = useQuery({
+    queryKey: ["userDetails"],
+    queryFn: getUserDetails,
+  });
+
+  const user = data?.userDetails;
+
   return (
     <div className="home-container">
       <div className="profile-container">
@@ -13,8 +21,19 @@ const Profile = () => {
             height="40px"
           />
         </div>
+        {isPending && <p>Loading...</p>}
+        {error && <p>Failed to load profile.</p>}
+        {user && (
+          <div className="profile-content">
+            <div>
+              <strong>Name:</strong> {data.user_name}
+            </div>
+            <div>
+              <strong>Email:</strong> {user.email}
+            </div>
+          </div>
+        )}
       </div>
-      {/* <div>Stats</div> */}
     </div>
   );
 };

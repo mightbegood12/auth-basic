@@ -3,9 +3,10 @@ import Login from "./pages/login";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useAppContext } from "./context/AppContext";
 import { Toaster } from "sonner";
 import Navbar from "./components/Navbar";
+import { useAppContext } from "./context/AppContext";
+import Register from "./pages/register";
 
 function App() {
   const { isAuthorized } = useAppContext();
@@ -15,6 +16,7 @@ function App() {
       {isAuthorized && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/profile"
           element={

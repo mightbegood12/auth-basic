@@ -271,6 +271,7 @@ textarea[name="content"] {
   align-items: center;
   justify-content: center;
   font-size: larger;
+  padding-top: 2rem;
   height: 70%;
 }
 
@@ -417,7 +418,15 @@ input:focus {
 
 .profile-title {
   display: flex;
-  gap: 1.4rem;
+  gap: 1rem;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+}
+
+.profile-content {
+  display: flex;
+  margin: 2rem;
+  flex-direction: column;
+  font-size: 1rem;
+  gap: 0.4rem;
 }

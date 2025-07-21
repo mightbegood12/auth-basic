@@ -1,27 +1,33 @@
 import { toast } from "sonner";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchAllNotes } from "../queries/api";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { setIsAuthorized } = useAppContext();
-  const { data } = useQuery({
+  const { data: notesData } = useQuery({
     queryKey: ["allNotes"],
-    queryFn: () => [],
-    enabled: false,
+    queryFn: fetchAllNotes,
+    staleTime: 1000 * 60,
+    enabled: !!localStorage.getItem("token"),
   });
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("User Logged out!");
+    queryClient.clear();
     navigate("/login");
     setIsAuthorized(false);
   };
+
   return (
     <div className="navbar">
       <div className="round-nav"></div>
       <NavLink
-        to={`/notes/${data?.notes[0] ? data?.notes[0].note_id : "noteId"}`}
+        to={`/notes/${notesData?.notes?.[0]?.note_id || "noteId"}`}
         className="title-nav"
       >
         <img src="/notes_icon.png" alt="Profile" width="16px" height="16px" />
