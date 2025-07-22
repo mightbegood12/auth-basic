@@ -1,35 +1,21 @@
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useEffect } from "react";
+import { authenticateUser } from "../queries/api";
 import PacmanLoader from "react-spinners/PacmanLoader";
-import axios from "axios";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthorized, setIsAuthorized } = useAppContext();
-
   useEffect(() => {
-    const authenticateUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          process.env.REACT_APP_BACKEND_URL + "/api/user/auth",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        if (response.data.success) {
-          setIsAuthorized(true);
-          // console.log("Authenticated:", response.data);
-        } else {
-          setIsAuthorized(false);
-        }
-      } catch (e) {
-        console.error("Authentication error:", e);
+    const authorizeUser = async () => {
+      const data = await authenticateUser();
+      if (data.success) {
+        setIsAuthorized(true);
+      } else {
         setIsAuthorized(false);
       }
     };
-
-    authenticateUser();
+    authorizeUser();
   }, [setIsAuthorized]);
 
   if (isAuthorized === null) {

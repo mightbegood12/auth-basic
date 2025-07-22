@@ -3,6 +3,8 @@ import pool from "../config/postgresConfig.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
+//utils
+//create token
 const createToken = (user_id, email) => {
   if (user_id) {
     return jwt.sign({ user_id, email }, process.env.JWT_SECRET_KEY, {
@@ -12,6 +14,7 @@ const createToken = (user_id, email) => {
   return false;
 };
 
+//compare user details
 const checkUserCredentials = async (emailId, password) => {
   try {
     const result = await pool.query(
@@ -33,6 +36,7 @@ const checkUserCredentials = async (emailId, password) => {
   }
 };
 
+//endpoint functions
 //Registering new user
 const registerUser = async (req, res) => {
   try {
@@ -89,6 +93,7 @@ const registerUser = async (req, res) => {
   }
 };
 
+//get user details
 const getUserDetails = async (req, res) => {
   try {
     const userDetails = req.user;

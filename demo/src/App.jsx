@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import Navbar from "./components/Navbar";
 import { useAppContext } from "./context/AppContext";
 import Register from "./pages/register";
+import AudioView from "./pages/audioView";
 
 function App() {
   const { isAuthorized } = useAppContext();
@@ -41,6 +42,7 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+        <Route path="/audio" element={<AudioView />}></Route>
       </Routes>
     </>
   );

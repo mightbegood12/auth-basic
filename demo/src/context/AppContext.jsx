@@ -1,6 +1,4 @@
 import { createContext, useContext, useState } from "react";
-// import { toast } from "sonner";
-
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {

@@ -8,17 +8,12 @@ const createNewNote = async (note_title, note_content) => {
     note_content,
     note_title,
   });
-  // fetchAllNotes();
   return response.data;
 };
 
 const fetchAllNotes = async () => {
   const response = await axiosInstance.get("/api/notes/fetchNotes");
   return response.data;
-  // Have to set all notes
-  // if (response.data.success) {
-  //   setAllNotes(response.data.notes);
-  // }
 };
 
 const deleteNote = async (note_id) => {
@@ -27,7 +22,6 @@ const deleteNote = async (note_id) => {
       id: note_id,
     },
   });
-  // fetchAllNotes();
   return response.data;
 };
 
@@ -37,7 +31,6 @@ const updateNote = async (note_id, note_title, note_content) => {
     note_content,
     note_title,
   });
-  // fetchAllNotes();
   return response.data;
 };
 
@@ -72,6 +65,11 @@ const registerUser = async ({ name, email, password }) => {
   return response.data;
 };
 
+const authenticateUser = async () => {
+  const response = await axiosInstance.get("/api/user/auth");
+  return response.data;
+};
+
 export {
   fetchAllNotes,
   fetchNoteById,
@@ -81,4 +79,5 @@ export {
   getUserDetails,
   loginUser,
   registerUser,
+  authenticateUser,
 };

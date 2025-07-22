@@ -430,3 +430,59 @@ input:focus {
   font-size: 1rem;
   gap: 0.4rem;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sub-container {
+  height: 2rem;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1.1rem;
+  background: #be8d06;
+  box-shadow: inset 11px 11px 22px #f0b71b, inset -11px -11px 22px #d8b30e;
+}
+
+.sub-container p {
+  color: #fff;
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+.wavesurfer-container {
+  margin: 1rem 0;
+  display: flex;
+}
+.wavesurfer-controls {
+  display: flex;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+}
+.wavesurfer-controls button {
+  color: white;
+  margin: 0 0.5rem;
+}
+.wavesurfer-controls button:nth-child(2),
+.wavesurfer-controls button:nth-child(3),
+.wavesurfer-controls button:nth-child(1),
+.wavesurfer-controls button:nth-child(4) {
+  background-color: rgba(252, 208, 16, 0.829);
+  border-radius: 2rem;
+  border: 1px solid black;
+  padding: 0.8rem;
+  color: black;
+}
+
+@media screen and (max-width: 998px) {
+  .sub-container {
+    height: 32rem;
+    width: 80vw;
+  }
+  .audio-image {
+    height: 13rem;
+    width: 67vw;
+  }
+}

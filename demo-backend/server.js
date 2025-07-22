@@ -11,7 +11,7 @@ dotenv.config();
 pool
   .connect()
   .then(() => {
-    console.log("Connected to local Postgres DB");
+    console.log("Connected to supabase Postgres DB");
   })
   .catch((err) => {
     console.log("Error connecting the PostgresDB", err);
