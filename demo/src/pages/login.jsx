@@ -12,6 +12,7 @@ const Login = () => {
   const { setIsAuthorized } = useAppContext();
   const queryClient = useQueryClient();
 
+  //login function
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
@@ -23,13 +24,11 @@ const Login = () => {
           queryKey: ["allNotes"],
           queryFn: fetchAllNotes,
         });
-
         const firstNoteId = notesData?.notes?.[0]?.note_id;
 
         if (firstNoteId) {
           navigate(`/notes/${firstNoteId}`);
         } else {
-          // fallback if no notes exist
           navigate("/notes/noteId");
         }
       } else {

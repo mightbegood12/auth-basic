@@ -486,3 +486,37 @@ input:focus {
     width: 67vw;
   }
 }
+
+.song-select {
+  margin-top: 20%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #1e1e2f;
+  color: #ffffff;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: 2px solid #ff9900;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+}
+
+.song-select:hover {
+  border-color: #ffa733;
+  background-color: #29293d;
+}
+
+.song-select:focus {
+  border-color: #ffd580;
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+.song-select option {
+  background-color: #1e1e2f;
+  color: #ffffff;
+}

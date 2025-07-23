@@ -42,7 +42,14 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
-        <Route path="/audio" element={<AudioView />}></Route>
+        <Route
+          path="/audio"
+          element={
+            <ProtectedRoute>
+              <AudioView />
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
     </>
   );

@@ -1,63 +1,80 @@
 import WaveSurfer from "wavesurfer.js";
 import { useEffect, useRef, useState } from "react";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const AudioView = () => {
   const waveformRef = useRef(null);
+  const wavesurferRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  let wavesurfer;
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentSong, setCurrentSong] = useState("/sample_audio.wav");
+  const songs = [
+    {
+      name: "Sample Audio",
+      src: "/sample_audio.wav",
+    },
+    {
+      name: "Interstellar",
+      src: "/interstellar.mp3",
+    },
+  ];
 
   useEffect(() => {
-    wavesurfer = WaveSurfer.create({
+    wavesurferRef.current = WaveSurfer.create({
       container: waveformRef.current,
-      waveColor: "#34374B",
+      waveColor: "#004574ff",
       progressColor: "#F90",
-      url: "/sample_audio.wav",
+      url: currentSong,
       dragToSeek: true,
-      width: "24vw",
-      height: "12vh",
+      width: "35vw",
       hideScrollbar: true,
       normalize: true,
       barGap: 1,
       height: 60,
       barHeight: 20,
       barRadius: 20,
-      barWidth: 5,
+      barWidth: 2,
     });
 
-    wavesurfer.on("finish", () => {
+    wavesurferRef.current.on("finish", () => {
       console.log("song finished");
     });
 
-    wavesurfer.on("ready", () => {
-      console.log("Waveform is ready");
+    wavesurferRef.current.on("ready", () => {
+      setIsLoading(false);
     });
     return () => {
-      wavesurfer.destroy();
+      wavesurferRef.current.destroy();
     };
-  }, []);
+  }, [currentSong]);
+
+  const handleSongChange = (e) => {
+    setIsLoading(true);
+    setIsPlaying(false);
+    setCurrentSong(e.target.value);
+  };
 
   const handleStop = () => {
-    if (wavesurfer) {
-      wavesurfer.stop();
+    if (wavesurferRef.current) {
+      wavesurferRef.current.stop();
     }
   };
   const handlePause = () => {
-    console.log("Container ref:", wavesurfer);
-
-    if (wavesurfer) {
-      wavesurfer.playPause();
-      // setIsPlaying(!isPlaying);
+    if (wavesurferRef) {
+      wavesurferRef.current.playPause();
+      setIsPlaying((prev) => !prev);
     }
+    // console.log("Container ref:", wavesurferRef);
   };
 
   const handleSkipForward = () => {
-    if (wavesurfer) {
-      wavesurfer.skip(1);
+    if (wavesurferRef) {
+      wavesurferRef.current?.skip(1);
     }
   };
   const handleSkipBack = () => {
-    if (wavesurfer) {
-      wavesurfer.skip(-1);
+    if (wavesurferRef) {
+      wavesurferRef.current?.skip(-1);
     }
   };
   return (
@@ -65,12 +82,20 @@ const AudioView = () => {
       <div className="sub-container">
         <p>Audio</p>
         <div ref={waveformRef} className="wavesurfer-container" />
+        {isLoading && <SyncLoader color="#110e99ff" />}
         <div className="wavesurfer-controls">
           <button onClick={handleSkipBack}>Backward</button>
           <button onClick={handlePause}>{isPlaying ? "Pause" : "Play"}</button>
           <button onClick={handleStop}>Stop</button>
           <button onClick={handleSkipForward}>Forward</button>
         </div>
+        <select className="song-select" onChange={handleSongChange}>
+          {songs.map((song, index) => (
+            <option key={index} value={song.src}>
+              {song.name}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

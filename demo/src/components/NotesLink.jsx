@@ -1,16 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteNote, fetchAllNotes } from "../queries/api.js";
 
 export const NotesLink = ({ title, content, id }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const handleDeleteNote = async () => {
-    try {
-      toast.info("Deleting note...");
-      await deleteNote(id);
+  const mutation = useMutation({
+    mutationFn: deleteNote,
+    onSuccess: async () => {
+      toast.success("Note");
       await queryClient.invalidateQueries({ queryKey: ["allNotes"] });
       const updatedData = await queryClient.ensureQueryData({
         queryKey: ["allNotes"],
@@ -23,10 +23,14 @@ export const NotesLink = ({ title, content, id }) => {
       } else {
         navigate("/notes/noteId");
       }
-    } catch (error) {
-      toast.error("Failed to delete note.");
-      console.error(error.message);
-    }
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+    },
+  });
+
+  const handleDeleteNote = async () => {
+    mutation.mutate(id);
   };
 
   return (

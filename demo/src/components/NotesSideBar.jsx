@@ -1,20 +1,27 @@
 import { toast } from "sonner";
 import { NotesLink } from "./NotesLink";
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNewNote } from "../queries/api.js";
 import SyncLoader from "react-spinners/SyncLoader";
 
 const NotesSideBar = ({ fetchNotesQuery }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const handleCreatingNote = async () => {
-    try {
-      const data = await createNewNote("Title", "Empty");
-      // console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+  const mutation = useMutation({
+    mutationFn: createNewNote,
+    onSuccess: async (data) => {
       toast.success("Note created successfully!");
       navigate(`/notes/${data.note_id}`);
+      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+    },
+  });
+  const handleCreatingNote = async () => {
+    try {
+      mutation.mutate("Title", "Empty");
     } catch (e) {
       console.log(e.message);
     }
