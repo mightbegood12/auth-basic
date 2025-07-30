@@ -21,7 +21,7 @@ const NotesSideBar = ({ fetchNotesQuery }) => {
   });
   const handleCreatingNote = async () => {
     try {
-      mutation.mutate("Title", "Empty");
+      mutation.mutate("Title");
     } catch (e) {
       console.log(e.message);
     }

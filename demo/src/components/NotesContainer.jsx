@@ -21,7 +21,8 @@ export const NotesContainer = () => {
     if (data?.note) {
       const note = data.note;
       setTitle(note.note_title);
-      setContent(note.note_content);
+      setContent(note.note_content ?? "");
+      console.log(note);
       const originalDate = new Date(note.updated_at);
       const curr_date = originalDate.toLocaleString("en-IN", {
         timeZone: "Asia/Kolkata",

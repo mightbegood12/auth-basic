@@ -8,6 +8,10 @@ import noteRouter from "./routers/noteRouter.js";
 const app = express();
 dotenv.config();
 
+pool.on("connect", (client) => {
+  client.query("SET search_path TO public");
+});
+
 pool
   .connect()
   .then(() => {

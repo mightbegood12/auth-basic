@@ -8,10 +8,15 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthorized, setIsAuthorized } = useAppContext();
   useEffect(() => {
     const authorizeUser = async () => {
-      const data = await authenticateUser();
-      if (data.success) {
-        setIsAuthorized(true);
-      } else {
+      try {
+        const data = await authenticateUser();
+        if (data?.success) {
+          setIsAuthorized(true);
+        } else {
+          setIsAuthorized(false);
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
         setIsAuthorized(false);
       }
     };
