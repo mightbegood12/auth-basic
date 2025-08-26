@@ -145,7 +145,8 @@ input[type="submit"] {
 
 .heading {
   padding: 12px;
-  font-size: 2rem;
+  font-size: 1.4rem;
+  text-align: center;
   position: sticky;
   top: 0px;
   backdrop-filter: blur(20px);
@@ -161,8 +162,8 @@ input[type="submit"] {
   content: " ";
   background-color: #ffc90f;
   position: absolute;
-  top: 50px;
-  left: 50%;
+  top: 40px;
+  left: 40%;
   width: 50px;
   height: 2px;
   opacity: 0.85;
@@ -172,9 +173,8 @@ input[type="submit"] {
 
 .note-view {
   background-color: #f3f2f1;
-  width: 100%;
+  width: 140%;
   height: 100%;
-  text-align: center;
   border-left: 2px solid rgba(201, 201, 201, 0.493);
 }
 
@@ -184,6 +184,8 @@ input[type="submit"] {
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .notes-link {
@@ -207,7 +209,7 @@ input[type="submit"] {
   background: #ffcb0f8e;
 }
 .text-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   padding-inline: 12px;
 }
@@ -224,10 +226,20 @@ input[type="submit"] {
 .notes-title {
   font-size: 2rem;
   font-weight: 600;
-  width: 80%;
+  width: 100%;
   background: transparent;
   outline: none;
+  padding-inline: 2rem;
+  height: 3rem;
+  box-sizing: border-box;
   border: none;
+}
+
+.title-counter {
+  font-size: small;
+  position: absolute;
+  right: 9rem;
+  top: 7.5rem;
 }
 
 .notes-title:focus {
@@ -261,9 +273,9 @@ textarea[name="content"] {
 }
 
 .notes-container {
-  height: 70%;
+  /* height: 70%; */
   border-radius: 30px;
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
 }
 
 .loading-container {
@@ -355,8 +367,8 @@ input:focus {
 .create-Btn,
 .sync-note,
 .delete-note {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 30px;
   display: flex;
   justify-content: center;
@@ -391,14 +403,30 @@ input:focus {
 
 .sync-btn:hover {
   .sync-note {
-    transform: rotate(30deg);
+    transform: rotate(60deg);
   }
   .sync-tt {
     opacity: 1;
     right: 0;
-    top: 3rem;
+    top: -1rem;
     display: block;
   }
+}
+
+.toastui-editor-mode-switch {
+  display: none !important;
+}
+.toastui-editor-defaultUI-toolbar {
+  background-color: #ededed !important;
+}
+.toastui-editor-toolbar-icons {
+  background-color: white !important;
+  font-size: medium;
+}
+
+.toastui-editor-contents {
+  font-size: medium !important;
+  height: 400px !important;
 }
 
 .create-Btn:hover {

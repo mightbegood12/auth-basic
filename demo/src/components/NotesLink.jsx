@@ -2,15 +2,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteNote, fetchAllNotes } from "../queries/api.js";
+import { useCallback } from "react";
+import filterMarkdownText from "../utils/filterMarkdownText.js";
 
 export const NotesLink = ({ title, content, id }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const filteredContent = filterMarkdownText(content);
+  // console.log(filteredContent);
 
-  const mutation = useMutation({
+  const { mutate: deleteNoteMutation } = useMutation({
     mutationFn: deleteNote,
     onSuccess: async () => {
-      toast.success("Note");
       await queryClient.invalidateQueries({ queryKey: ["allNotes"] });
       const updatedData = await queryClient.ensureQueryData({
         queryKey: ["allNotes"],
@@ -29,15 +32,15 @@ export const NotesLink = ({ title, content, id }) => {
     },
   });
 
-  const handleDeleteNote = async () => {
-    mutation.mutate(id);
-  };
+  const handleDeleteNote = useCallback(() => {
+    deleteNoteMutation(id);
+  }, [deleteNoteMutation]);
 
   return (
     <div className="notes-link-container">
       <NavLink to={`/notes/${id}`} className="notes-link">
         <div className="text-title">{title}</div>
-        <div className="text-one-line">{content}</div>
+        <div className="text-one-line">{filteredContent}</div>
       </NavLink>
       <div className="delete-btn">
         <img
