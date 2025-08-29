@@ -424,9 +424,13 @@ input:focus {
   font-size: medium;
 }
 
+.toastui-editor-main {
+  min-height: 100% !important;
+}
+
 .toastui-editor-contents {
   font-size: medium !important;
-  height: 400px !important;
+  height: 800px !important;
 }
 
 .create-Btn:hover {
@@ -438,7 +442,8 @@ input:focus {
   text-align: end;
   padding-right: 20px;
   color: #2c2c2c60;
-  height: 4rem;
+  margin-top: 4rem;
+  height: 2rem;
   display: flex;
   align-items: end;
   justify-content: end;
@@ -547,4 +552,41 @@ input:focus {
 .song-select option {
   background-color: #1e1e2f;
   color: #ffffff;
+}
+
+.profile-container {
+  background: rgba(255, 211, 53, 0.2); /* golden tint */
+  border-radius: 1.5rem;
+  padding: 2rem;
+  backdrop-filter: blur(12px); /* glass effect */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 211, 53, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 28rem;
+  max-width: 90vw;
+}
+
+.profile-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c2c2c; /* keep text dark */
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1rem;
+  color: #2c2c2c; /* consistent readable dark */
+}
+
+.profile-content strong {
+  color: #be8d06; /* accent with gold */
 }
