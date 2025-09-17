@@ -58,6 +58,7 @@ const DragPreview = ({ title, content }) => {
         pointerEvents: "none", // prevents it from interfering
       }}
     >
+      {/* drag and drop container */}
       <div style={{ fontWeight: "bold", marginBottom: "6px" }}>{title}</div>
       <div style={{ color: "#666" }}>{content?.slice(0, 50) ?? ""}</div>
     </div>

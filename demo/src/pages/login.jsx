@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchAllNotes, loginUser } from "../queries/api";
+import { createNewNote, fetchAllNotes, loginUser } from "../queries/api";
 import { useAppContext } from "../context/AppContext";
 import { toast } from "sonner";
 
@@ -11,6 +11,19 @@ const Login = () => {
   const navigate = useNavigate();
   const { setIsAuthorized } = useAppContext();
   const queryClient = useQueryClient();
+
+  //Creating new note
+  const createNewNotemutation = useMutation({
+    mutationFn: createNewNote,
+    onSuccess: async (data) => {
+      toast.success("Note created successfully!");
+      navigate(`/notes/${data.note_id}`);
+      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+    },
+  });
 
   //login function
   const mutation = useMutation({
@@ -25,11 +38,12 @@ const Login = () => {
           queryFn: fetchAllNotes,
         });
         const firstNoteId = notesData?.notes?.[0]?.note_id;
-
+        console.log(firstNoteId);
         if (firstNoteId) {
           navigate(`/notes/${firstNoteId}`);
         } else {
-          navigate("/notes/noteId");
+          // navigate("/notes/noteId");
+          createNewNotemutation.mutate("Title");
         }
       } else {
         toast.error("Login failed.");

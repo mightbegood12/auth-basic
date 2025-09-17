@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteNote, fetchAllNotes } from "../queries/api.js";
+import { createNewNote, deleteNote, fetchAllNotes } from "../queries/api.js";
 import { useCallback } from "react";
 import filterMarkdownText from "../utils/filterMarkdownText.js";
 
@@ -10,6 +10,19 @@ export const NotesLink = ({ title, content, id }) => {
   const navigate = useNavigate();
   const filteredContent = filterMarkdownText(content);
   // console.log(filteredContent);
+
+  //Creating new note
+  const createNewNotemutation = useMutation({
+    mutationFn: createNewNote,
+    onSuccess: async (data) => {
+      toast.success("Note created successfully!");
+      navigate(`/notes/${data.note_id}`);
+      queryClient.invalidateQueries({ queryKey: ["allNotes"] });
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+    },
+  });
 
   const { mutate: deleteNoteMutation } = useMutation({
     mutationFn: deleteNote,
@@ -24,7 +37,7 @@ export const NotesLink = ({ title, content, id }) => {
       if (remainingNotes.length > 0) {
         navigate(`/notes/${remainingNotes[0].note_id}`);
       } else {
-        navigate("/notes/noteId");
+        createNewNotemutation.mutate("Title");
       }
     },
     onError: () => {

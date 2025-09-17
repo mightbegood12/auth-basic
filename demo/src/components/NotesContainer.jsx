@@ -76,34 +76,37 @@ export const NotesContainer = () => {
         </div>
       ) : (
         <div className="notes-container">
-          <input
-            type="text"
-            className="notes-title"
-            placeholder="Title"
-            value={title}
-            maxLength={32}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <div className="title-counter">
-            {32 - title.length} charaters remaining.
+          <div className="notes-title-container">
+            <input
+              type="text"
+              className="notes-title"
+              placeholder="Title"
+              value={title}
+              maxLength={32}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <div className="title-counter">
+              {32 - title.length} charaters remaining.
+            </div>
           </div>
-
-          <Editor
-            key={params.noteId} // 👈 forces a fresh editor when note changes
-            initialValue={data.note.note_content ?? "Type here!"}
-            initialEditType="wysiwyg"
-            useCommandShortcut={true}
-            ref={editorRef}
-            usageStatistics={false}
-            toolbarItems={[
-              ["heading", "bold", "italic", "strike"],
-              ["hr", "quote"],
-              ["ul", "ol", "task"],
-              ["table", "link"],
-              ["code", "codeblock"],
-            ]}
-          />
-
+          <div className="editor">
+            <Editor
+              key={params.noteId}
+              initialValue={data.note.note_content ?? "Type here!"}
+              initialEditType="wysiwyg"
+              useCommandShortcut={true}
+              ref={editorRef}
+              height="100%"
+              usageStatistics={false}
+              toolbarItems={[
+                ["heading", "bold", "italic", "strike"],
+                ["hr", "quote"],
+                ["ul", "ol", "task"],
+                ["table", "link"],
+                ["code", "codeblock"],
+              ]}
+            />
+          </div>
           <div className="time-stamp">Last updated at {date}</div>
         </div>
       )}

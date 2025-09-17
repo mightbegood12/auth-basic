@@ -222,24 +222,29 @@ input[type="submit"] {
   padding-inline: 12px;
   text-align: start;
 }
+.notes-title-container {
+  position: relative;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+}
 
 .notes-title {
+  box-sizing: border-box;
   font-size: 2rem;
   font-weight: 600;
   width: 100%;
   background: transparent;
   outline: none;
   padding-inline: 2rem;
-  height: 3rem;
-  box-sizing: border-box;
   border: none;
 }
 
 .title-counter {
   font-size: small;
   position: absolute;
-  right: 9rem;
-  top: 7.5rem;
+  right: 1rem;
+  top: 1rem;
 }
 
 .notes-title:focus {
@@ -273,7 +278,7 @@ textarea[name="content"] {
 }
 
 .notes-container {
-  /* height: 70%; */
+  height: 90%;
   border-radius: 30px;
   /* padding-top: 2rem; */
 }
@@ -425,12 +430,19 @@ input:focus {
 }
 
 .toastui-editor-main {
-  min-height: 100% !important;
+  min-height: auto !important;
+}
+
+.toastui-editor-defaultUI {
+  height: 100% !important;
 }
 
 .toastui-editor-contents {
   font-size: medium !important;
-  height: 800px !important;
+}
+
+.editor {
+  height: 90%;
 }
 
 .create-Btn:hover {
@@ -442,7 +454,6 @@ input:focus {
   text-align: end;
   padding-right: 20px;
   color: #2c2c2c60;
-  margin-top: 4rem;
   height: 2rem;
   display: flex;
   align-items: end;
