@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar";
 import { useAppContext } from "./context/AppContext";
 import Register from "./pages/register";
 import AudioView from "./pages/audioView";
+import { Route, Routes } from "react-router-dom";
+import RootRedirect from "./components/RootRedirect";
 
 function App() {
   const { isAuthorized } = useAppContext();
@@ -35,13 +37,14 @@ function App() {
           }
         />
         <Route
-          path="*"
+          path="/"
           element={
             <ProtectedRoute>
-              <div>404 Page not Found</div>
+              <RootRedirect />
             </ProtectedRoute>
           }
-        ></Route>
+        />
+
         <Route
           path="/audio"
           element={
@@ -49,10 +52,17 @@ function App() {
               <AudioView />
             </ProtectedRoute>
           }
-        ></Route>
+        />
+
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <div>404 Page not Found</div>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
 }
-
-export default App;
